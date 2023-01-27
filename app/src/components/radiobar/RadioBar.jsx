@@ -5,7 +5,7 @@ import Result from "../result/Result";
 const RadioBar = () => {
   const API_URL =
     "https://api.openai.com/v1/engines/text-davinci-003/completions";
-  const API_KEY = "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";
+  const API_KEY = "YOUR_API_KEY";
 
   const [favoriteLanguage, setfavoriteLanguage] = useState("C#");
   const [result, setResult] = useState("");
