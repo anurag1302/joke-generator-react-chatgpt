@@ -9,13 +9,13 @@ const RadioBar = () => {
     "https://api.openai.com/v1/engines/text-davinci-003/completions";
   const API_KEY = "YOUR_API_KEY";
 
-  const [favoriteLanguage, setfavoriteLanguage] = useState("C#");
+  const [favoriteLanguage, setFavoriteLanguage] = useState("C#");
   const [result, setResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const onOptionChange = (e) => {
-    setfavoriteLanguage(e.target.value);
+    setFavoriteLanguage(e.target.value);
   };
 
   const data = JSON.stringify({
