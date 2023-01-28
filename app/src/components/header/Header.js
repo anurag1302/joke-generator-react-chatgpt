@@ -4,7 +4,7 @@ const Header = () => {
   return (
     <div>
       <h2 className="display-6 mt-lg-5">
-        Welcome to Programming Joke Generator - Powered by Chat GPT
+        Welcome to Programming Joke Generator - Powered by OpenAI
       </h2>
       <p className="mt-lg-5">
         <strong>

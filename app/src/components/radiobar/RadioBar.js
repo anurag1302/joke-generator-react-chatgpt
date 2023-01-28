@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import Result from "../result/Result";
+import LoadingSpinner from "../loadingspinner/LoadingSpinner";
+import Error from "../error/Error";
 
 const RadioBar = () => {
   const API_URL =
@@ -9,10 +11,12 @@ const RadioBar = () => {
 
   const [favoriteLanguage, setfavoriteLanguage] = useState("C#");
   const [result, setResult] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  function onOptionChange(e) {
+  const onOptionChange = (e) => {
     setfavoriteLanguage(e.target.value);
-  }
+  };
 
   const data = JSON.stringify({
     prompt: `Tell me a funny joke about ${favoriteLanguage}.`,
@@ -20,7 +24,8 @@ const RadioBar = () => {
     temperature: 0.5,
   });
 
-  function callChatGptAPI() {
+  const callChatGptAPI = () => {
+    setIsLoading(true);
     axios
       .post(API_URL, data, {
         headers: {
@@ -28,11 +33,17 @@ const RadioBar = () => {
           Authorization: `Bearer ${API_KEY}`,
         },
       })
-      .then((res) => {
-        setResult(res.data.choices[0].text);
+      .then((response) => {
+        setIsLoading(false);
+        setResult(response.data.choices[0].text);
       })
-      .catch((error) => console.log(error));
-  }
+      .catch((error) => {
+        setIsLoading(false);
+        setErrorMessage(
+          "Something went wrong. Please refresh and try again!!!"
+        );
+      });
+  };
   return (
     <div>
       <fieldset className="mt-lg-5">
@@ -104,12 +115,13 @@ const RadioBar = () => {
       </fieldset>
       <button
         className="mt-lg-5 btn btn-success"
-        id="btnGenerate"
         onClick={callChatGptAPI}
+        disabled={isLoading}
       >
         Generate a Random Joke
       </button>
-      <Result joke={result} />
+      {isLoading ? <LoadingSpinner /> : <Result joke={result} />}
+      {errorMessage && <Error errorMessage={errorMessage} />}
     </div>
   );
 };
